@@ -48,4 +48,4 @@ Map explicitly. Never expose Prisma models directly to the Frontend or place the
 
 ## Pre-Initialization Gates
 
-The entity identifier strategy and exact monetary representation require an approved technical decision before database initialization. Authentication/storage choices remain separate gates. Missing choices must not be silently filled.
+The entity identifier strategy is resolved by `TECH-ADR-003`: canonical Business entity IDs are application-generated UUID v7 values persisted as PostgreSQL native `uuid`, with Prisma representation `String @db.Uuid` and no Prisma/database default owning canonical ID generation. Exact monetary representation still requires an approved technical decision before database initialization. Authentication/storage choices remain separate gates.

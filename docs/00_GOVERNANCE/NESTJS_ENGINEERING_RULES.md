@@ -36,7 +36,10 @@ These rules govern `apps/api` after initialization. They apply after canonical B
 - Map application results to explicit OpenAPI response DTOs. Never return Prisma models or Domain entities from controllers.
 - Domain/Application errors remain transport-neutral. A centralized exception filter maps them to the stable API error envelope and correlation/request ID.
 - Interceptors and pipes may own transport cross-cutting behavior or parsing; they must not hide Business policy, Business audit, persistence, or authorization decisions.
-- The only current REST version strategy is the locked `/api/v1` URI strategy. Do not infer an ID format from an upstream `ParseUUIDPipe` example before the ID decision.
+- The only current REST version strategy is the locked `/api/v1` URI strategy.
+- `TECH-ADR-003` approves application-generated UUID v7 for canonical Business entity IDs.
+- Transport validation may validate UUID-formatted identifiers, but Nest pipes/decorators do not own Domain identity semantics.
+- Domain/Application code must not depend on Prisma or the concrete UUID-generation library.
 
 ## Security and validation
 

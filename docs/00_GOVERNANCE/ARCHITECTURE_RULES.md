@@ -224,6 +224,11 @@ A module must not query another module's tables because Prisma makes it convenie
 - Technical logs and canonical Business Audit records are separate.
 - Technical logs use correlation/request IDs and centralized sensitive-data redaction; a technical log entry never satisfies a canonical Business Audit requirement.
 - Technical environment configuration and Business operational configuration are separate.
+- Canonical Business entity identity uses application-generated UUID v7 under `TECH-ADR-003`.
+- ID generation is exposed through a narrow application/technical abstraction; Domain code does not depend on Prisma or a concrete UUID library.
+- PostgreSQL uses native `uuid`; API/contracts use UUID-formatted strings.
+- Canonical IDs contain no Business meaning and are not authorization controls.
+- A separate public/external identifier is not introduced without a concrete governed requirement.
 - Archive is a Business lifecycle concept, not a generic `deletedAt` policy.
 
 ## Placement and Generation Gate

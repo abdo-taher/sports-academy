@@ -83,7 +83,7 @@ The application workspaces are not initialized yet. When `apps/web`, `apps/api` 
 | Structured logging implementation | `LOCKED — Pino + nestjs-pino; TECH-ADR-001 APPROVED` | One structured Backend logger only; no Winston or competing production logger; no production `console.log` strategy |
 | Date utility | `NOT YET LOCKED — ADR REQUIRED BEFORE ADDING A LIBRARY` | Do not add multiple date libraries |
 | Monetary representation | `NOT YET LOCKED — ADR REQUIRED BEFORE DB INITIALIZATION` | No unsafe floating-point financial representation |
-| Entity identifier strategy | `NOT YET LOCKED — ADR REQUIRED BEFORE DB INITIALIZATION` | Do not mix UUID, CUID, integers and random strings by domain |
+| Entity identifier strategy | `LOCKED — application-generated UUID v7; PostgreSQL native uuid; TECH-ADR-003 APPROVED` | One canonical Business entity ID strategy; no CUID/integer/random-string drift by domain |
 | Realtime transport | Disabled by default | WebSockets, Socket.IO or SSE require a confirmed requirement and ADR |
 
 These open technical choices do not reopen Business roles, permissions, policies or financial behavior.

@@ -26,6 +26,8 @@ Business action
   -> generated/approved client artifact
 ```
 
+Canonical Business entity resource identifiers follow `TECH-ADR-003`: application-generated UUID v7, serialized through REST/OpenAPI as `type: string` with `format: uuid`. Identifier validation is transport-level validation only; authorization still requires actor identity, permission, scope and applicable Business Rules.
+
 Reads use resource-oriented GET operations. Governed state changes use explicit command endpoints, for example `POST /subscriptions/:id/freeze`, when current Rules define that action. Do not substitute a generic status patch or generic DELETE/soft-delete operation for a governed lifecycle transition.
 
 ## Contracts

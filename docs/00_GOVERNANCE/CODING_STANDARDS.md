@@ -90,7 +90,10 @@ Backend suffixes are consistent: `.entity.ts`, `.repository.ts`, `.controller.ts
 - Do not manipulate date strings ad hoc or add multiple date libraries.
 - Use an approved exact monetary representation; do not rely on unsafe floating-point arithmetic.
 - Currency is explicit where required and is not hardcoded across random files.
-- Use one approved entity ID strategy after the required ADR.
+- Canonical Business entity IDs use application-generated UUID v7 as approved by `TECH-ADR-003`.
+- PostgreSQL persists canonical entity IDs as native `uuid`; APIs represent them as UUID-formatted strings.
+- Domain code must not import Prisma or a concrete UUID-generation library.
+- IDs are technical identity only: never encode Business meaning and never rely on identifier secrecy for authorization.
 - Do not add generic `deletedAt` fields. Implement the canonical lifecycle for the owning domain; Archive is not delete.
 
 ## Completion
