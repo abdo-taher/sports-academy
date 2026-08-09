@@ -9,6 +9,7 @@ import type { ChangedFile, ValidationContext } from "../src/core/types.ts";
 import { validateBusinessGate } from "../src/validators/business-gate.ts";
 import { validateBusiness } from "../src/validators/business.ts";
 import { validateDependencies } from "../src/validators/dependencies.ts";
+import { validateDatabase } from "../src/validators/database.ts";
 import { validateDocumentation } from "../src/validators/documentation.ts";
 import { validateGovernance } from "../src/validators/governance.ts";
 import { validateNestjsArchitecture } from "../src/validators/nestjs.ts";
@@ -235,5 +236,128 @@ useFixture("propagation case C treats UX-only change as Business N/A", async (ro
 
 useFixture("propagation case D accepts configuration classification without a new Rule", async (root) => {
   const report = await propagation(root, { changeId: "CHG-CASE-D", type: "CONFIGURATION", primaryDomain: "POLICY", affectedRules: [], layers: reviewed({ business: "UPDATED", tests: "UPDATED" }) }, [{ path: "docs/01_BUSINESS_FOUNDATION/RULES.md", status: "M" }]);
+  assert.equal(report.status, "PASS");
+});
+
+
+useFixture("Prisma generator provider does not trigger datasource drift and generated client is ignored", async (root) => {
+  write(root, "apps/api/package.json", JSON.stringify({ name: "api" }));
+  write(
+    root,
+    "apps/api/prisma/schema.prisma",
+    [
+      'generator client {',
+      '  provider = "prisma-client"',
+      '  output = "../src/generated/prisma"',
+      '}',
+      '',
+      'datasource db {',
+      '  provider = "postgresql"',
+      '}',
+      ''
+    ].join("\n")
+  );
+  write(
+    root,
+    "apps/api/src/generated/prisma/client.ts",
+    "/* generated example: const prisma = new PrismaClient({ adapter }) */\n"
+  );
+
+  const report = await validateDatabase(context(root, []));
+  assert.equal(report.status, "PASS");
+  assert.equal(report.metrics.prismaClients, 0);
+});
+
+useFixture("non-PostgreSQL Prisma datasource fails even when generator provider is valid", async (root) => {
+  write(root, "apps/api/package.json", JSON.stringify({ name: "api" }));
+  write(
+    root,
+    "apps/api/prisma/schema.prisma",
+    [
+      'generator client {',
+      '  provider = "prisma-client"',
+      '}',
+      '',
+      'datasource db {',
+      '  provider = "sqlite"',
+      '}',
+      ''
+    ].join("\n")
+  );
+
+  const report = await validateDatabase(context(root, []));
+  assert.equal(report.status, "FAIL");
+  assert.ok(report.findings.some((item) => item.code === "DB-PROVIDER-DRIFT"));
+});
+
+useFixture("Prisma schema change still requires a newly added migration", async (root) => {
+  write(root, "apps/api/package.json", JSON.stringify({ name: "api" }));
+  write(
+    root,
+    "apps/api/prisma/schema.prisma",
+    [
+      'datasource db {',
+      '  provider = "postgresql"',
+      '}',
+      '',
+      'model Student {',
+      '  id String @id',
+      '}',
+      ''
+    ].join("\n")
+  );
+
+  const withoutMigration = await validateDatabase(
+    context(root, [{ path: "apps/api/prisma/schema.prisma", status: "A" }])
+  );
+  assert.equal(withoutMigration.status, "FAIL");
+  assert.ok(withoutMigration.findings.some((item) => item.code === "DB-MIGRATION-MISSING"));
+
+  write(root, "apps/api/prisma/migrations/20260810000000_init/migration.sql", "-- fixture\n");
+  const withMigration = await validateDatabase(
+    context(root, [
+      { path: "apps/api/prisma/schema.prisma", status: "A" },
+      {
+        path: "apps/api/prisma/migrations/20260810000000_init/migration.sql",
+        status: "A"
+      }
+    ])
+  );
+  assert.equal(withMigration.status, "PASS");
+});
+
+
+useFixture("untracked Prisma migration satisfies working-tree migration gate", async (root) => {
+  write(root, "apps/api/package.json", JSON.stringify({ name: "api" }));
+  write(
+    root,
+    "apps/api/prisma/schema.prisma",
+    [
+      'datasource db {',
+      '  provider = "postgresql"',
+      '}',
+      '',
+      'model Student {',
+      '  id String @id',
+      '}',
+      ''
+    ].join("\n")
+  );
+  write(
+    root,
+    "apps/api/prisma/migrations/20260810000001_untracked/migration.sql",
+    "-- fixture\n"
+  );
+
+  const report = await validateDatabase(
+    context(root, [
+      { path: "apps/api/prisma/schema.prisma", status: "?" },
+      {
+        path: "apps/api/prisma/migrations/20260810000001_untracked/migration.sql",
+        status: "?"
+      }
+    ])
+  );
+
   assert.equal(report.status, "PASS");
 });

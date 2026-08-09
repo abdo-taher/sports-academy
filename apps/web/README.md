@@ -1,5 +1,7 @@
 # Web Workspace
 
-This workspace is reserved for the Next.js App Router application. It is intentionally not application-initialized yet.
+This workspace contains the initialized Next.js App Router application foundation.
 
-Before initialization, follow [`AGENTS.md`](./AGENTS.md), the root technology lock and the fixed Frontend structure in `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`. Initialization must pin exact approved dependency versions and use the root pnpm lockfile.
+Follow [`AGENTS.md`](./AGENTS.md), the root technology lock, and the fixed Frontend structure in `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`.
+
+Current initialization scope provides the governed technical foundation only. Product features, Business behavior, authorization assumptions, and other user-facing behavior must be implemented only from approved Requirements, UX flows, permissions, and API contracts.

@@ -11,3 +11,5 @@ coverage/
 *.log
 .change/current-change.json
 .validation/reports/
+apps/api/src/generated/prisma/
+*.tsbuildinfo

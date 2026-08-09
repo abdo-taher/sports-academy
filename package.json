@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "2.1.0",
+    "@playwright/test": "1.62.1",
     "turbo": "2.10.7"
   }
 }

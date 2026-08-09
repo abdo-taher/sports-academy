@@ -1,0 +1,3 @@
+-- CHG-TECH-INIT-001
+-- Prisma/PostgreSQL application-initialization baseline.
+-- No persisted Business models or Business data structures are introduced by this migration.
