@@ -25,7 +25,7 @@ Before a feature, follow:
 Business Domain -> Requirements -> DDD -> Database -> API -> Security -> Implementation
 ```
 
-Use explicit application use cases, thin controllers, server-authoritative validation and tests from `TESTING_STRATEGY.md`. Authentication, the Backend test runner, monetary representation and entity IDs remain blocked where `TECH_STACK_LOCK.md` requires a technical decision.
+Use explicit application use cases, thin controllers, server-authoritative validation and tests from `TESTING_STRATEGY.md`. Authentication, monetary representation and entity IDs remain blocked where `TECH_STACK_LOCK.md` requires a technical decision. The Backend test runner is resolved: `TECH-ADR-002` approves Vitest.
 
 Structured Backend logging is no longer an open decision: `TECH-ADR-001` approves Pino + `nestjs-pino`. Keep concrete logging configuration in bootstrap/infrastructure, preserve correlation/request IDs and redaction, and never treat technical logs as Business Audit records.
 

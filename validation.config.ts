@@ -74,14 +74,15 @@ const config: ValidationConfig = {
     "REST",
     "OpenAPI",
     "Pino",
-    "nestjs-pino"
+    "nestjs-pino",
+    "Vitest"
   ],
   prohibitedDependencies: [
     "@reduxjs/*", "redux", "mobx", "zustand", "swr", "formik", "yup",
     "@mui/*", "antd", "@chakra-ui/*", "bootstrap", "styled-components", "@emotion/*",
     "typeorm", "sequelize", "drizzle-orm", "mikro-orm", "@mikro-orm/*", "mongoose",
     "@nestjs/graphql", "graphql", "apollo*", "kafkajs", "amqplib", "bull", "cypress",
-    "winston"
+    "winston", "jest", "ts-jest", "@types/jest"
   ],
   allowedExceptions: [],
   documentationIndexLocations: [

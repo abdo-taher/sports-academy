@@ -78,7 +78,7 @@ The application workspaces are not initialized yet. When `apps/web`, `apps/api` 
 | Concern | Status | Implementation gate |
 |---|---|---|
 | Authentication technology | `NOT YET LOCKED — ADR REQUIRED BEFORE IMPLEMENTATION` | Do not introduce Auth.js, Clerk, Firebase Auth, Supabase Auth or a custom framework |
-| Backend test runner | `NOT YET LOCKED — SELECT ONE DURING API INITIALIZATION` | Do not mix Jest and Vitest in `apps/api` |
+| Backend test runner | `LOCKED — Vitest; TECH-ADR-002 APPROVED` | Vitest is the only Backend unit/integration runner; do not add Jest or ts-jest to `apps/api` |
 | Object-storage provider | `NOT YET LOCKED — ADR REQUIRED BEFORE PROVIDER COUPLING` | Use only a provider-neutral abstraction until selected |
 | Structured logging implementation | `LOCKED — Pino + nestjs-pino; TECH-ADR-001 APPROVED` | One structured Backend logger only; no Winston or competing production logger; no production `console.log` strategy |
 | Date utility | `NOT YET LOCKED — ADR REQUIRED BEFORE ADDING A LIBRARY` | Do not add multiple date libraries |

@@ -11,9 +11,9 @@ Technical test tooling and placement are canonical in `../00_GOVERNANCE/TESTING_
 - Frontend unit/hooks: Vitest.
 - Frontend components: React Testing Library on Vitest.
 - Browser end-to-end: Playwright.
-- Backend unit/integration: one runner selected during API initialization; never mix Jest and Vitest.
+- Backend unit/integration: Vitest, approved by `TECH-ADR-002`; Jest and competing Backend runners are not permitted without a superseding ADR.
 
-Cypress, PHPUnit, Pest and other competing application test runners are not approved for this TypeScript stack. API validation is implemented in the chosen Backend runner rather than as a separate competing test architecture.
+Cypress, Jest, `ts-jest`, PHPUnit, Pest and other competing application test runners are not approved for this stack where they conflict with the locked runner. Backend API validation runs through Vitest rather than a separate competing test architecture.
 
 ## Coverage Model
 

@@ -70,6 +70,11 @@ These rules govern `apps/api` after initialization. They apply after canonical B
 - Lazy module loading requires measured startup/cold-start need and architecture review; it is not a default modular-monolith pattern.
 - A single deployable API may expose deployment-appropriate liveness/readiness checks after dependency and information-disclosure review. This does not authorize Nest microservices, Terminus, or Kubernetes dependencies automatically.
 - Enable graceful shutdown and close HTTP, Prisma, Redis, BullMQ, and other owned resources within deployment timeouts.
+- Backend unit/integration testing uses Vitest as approved by `TECH-ADR-002`.
+- Nest `TestingModule` remains the approved Nest module/DI test mechanism where appropriate; it does not select or replace the test runner.
+- Domain tests should remain framework-light where possible.
+- Jest, `ts-jest` or another competing Backend runner requires a superseding approved ADR.
+- Supertest, if later approved for HTTP integration tests, is a test client and not a second runner.
 - Structured logging is approved through `TECH-ADR-001`: use Pino with `nestjs-pino` for Backend technical logging.
 - Concrete logger configuration belongs to bootstrap/infrastructure; Domain code must not import Pino or `nestjs-pino`.
 - Correlation/request IDs and centralized sensitive-data redaction are required. Technical logs remain separate from canonical Business Audit records.

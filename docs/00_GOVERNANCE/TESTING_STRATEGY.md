@@ -11,9 +11,9 @@ This file locks test tooling, placement and minimum coverage behavior. Expected 
 | Frontend unit and hook tests | Vitest | Locked |
 | Frontend component tests | React Testing Library on Vitest | Locked |
 | Browser end-to-end | Playwright | Locked |
-| Backend unit/integration | One runner selected during `apps/api` initialization | `NOT YET LOCKED — SELECT ONE; DO NOT MIX RUNNERS` |
+| Backend unit/integration | Vitest | `LOCKED — TECH-ADR-002 APPROVED` |
 
-Cypress and competing frontend test runners are prohibited. The Backend must not mix Jest and Vitest; selecting its one runner is a technical initialization decision and must be recorded.
+Cypress and competing frontend test runners are prohibited. Vitest is the single approved Backend unit/integration runner under `TECH-ADR-002`; Jest, `ts-jest` and competing Backend runners require a superseding approved ADR.
 
 ## Test Placement
 
