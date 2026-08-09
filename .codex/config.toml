@@ -1,0 +1,31 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# Codex automatically loads the repository-root AGENTS.md.
+# This fallback keeps team routing discoverable if AGENTS.md is ever unavailable.
+project_doc_fallback_filenames = ["TEAM_START_HERE.md"]
+
+[mcp_servers.sports-academy-validator]
+command = "pnpm"
+args = ["mcp:validator"]
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+enabled = true
+required = true
+enabled_tools = [
+  "validate_documentation",
+  "validate_business",
+  "validate_business_gate",
+  "validate_change_propagation",
+  "validate_repository_structure",
+  "validate_tech_stack",
+  "validate_dependencies",
+  "validate_nestjs_architecture",
+  "validate_frontend_architecture",
+  "validate_database",
+  "validate_api",
+  "validate_tests",
+  "validate_governance",
+  "validate_changed_scope",
+  "validate_all"
+]
+default_tools_approval_mode = "auto"

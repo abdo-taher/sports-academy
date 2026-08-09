@@ -1,0 +1,41 @@
+{
+  "name": "sports-academy-platform",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.0.9",
+  "engines": {
+    "node": "22.22.2",
+    "pnpm": "11.0.9"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "check:structure": "pnpm validate:structure",
+    "validate": "pnpm validate:changed",
+    "validate:changed": "pnpm --filter @sports-academy/project-validator cli changed",
+    "validate:business": "pnpm --filter @sports-academy/project-validator cli business",
+    "validate:business-gate": "pnpm --filter @sports-academy/project-validator cli business-gate",
+    "validate:docs": "pnpm --filter @sports-academy/project-validator cli documentation",
+    "validate:structure": "pnpm --filter @sports-academy/project-validator cli structure",
+    "validate:dependencies": "pnpm --filter @sports-academy/project-validator cli dependencies",
+    "validate:backend": "pnpm --filter @sports-academy/project-validator cli nestjs",
+    "validate:frontend": "pnpm --filter @sports-academy/project-validator cli frontend",
+    "validate:db": "pnpm --filter @sports-academy/project-validator cli database",
+    "validate:api": "pnpm --filter @sports-academy/project-validator cli api",
+    "validate:tests": "pnpm --filter @sports-academy/project-validator cli tests",
+    "validate:governance": "pnpm --filter @sports-academy/project-validator cli governance",
+    "validate:propagation": "pnpm --filter @sports-academy/project-validator cli propagation",
+    "validate:all": "pnpm --filter @sports-academy/project-validator cli all",
+    "mcp:validator": "pnpm --filter @sports-academy/validation-mcp start",
+    "mcp:inspect": "mcp-inspector pnpm mcp:validator",
+    "mcp:inspect:list": "mcp-inspector --cli node --import tsx src/server.ts -- --method tools/list --cwd tools/validation-mcp --format json"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "2.1.0",
+    "turbo": "2.10.7"
+  }
+}

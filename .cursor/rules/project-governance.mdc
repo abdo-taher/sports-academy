@@ -1,0 +1,11 @@
+---
+description: Sports Academy Platform repository governance
+alwaysApply: true
+---
+
+- Read `/AGENTS.md` before work.
+- Read `/docs/00_GOVERNANCE/AI_START_HERE.md` when interpreting the system.
+- Read `/docs/00_GOVERNANCE/AI_CHANGE_PROPAGATION_PROTOCOL.md` before changes.
+- Apply Business First and preserve the canonical Source of Truth.
+- Update every impacted active artifact; do not leave isolated stale edits.
+- Never use ARCHIVE or historical material as current authority.
