@@ -224,6 +224,11 @@ A module must not query another module's tables because Prisma makes it convenie
 - Technical logs and canonical Business Audit records are separate.
 - Technical logs use correlation/request IDs and centralized sensitive-data redaction; a technical log entry never satisfies a canonical Business Audit requirement.
 - Technical environment configuration and Business operational configuration are separate.
+- Canonical monetary values use exact decimal representation under `TECH-ADR-004`.
+- Domain/Application money must remain independent of Prisma; persistence maps exact values to Prisma Decimal and PostgreSQL NUMERIC.
+- Decimal-string API transport preserves exact monetary values across the JSON boundary.
+- Currency, rounding and field precision/scale remain governed inputs and must not be inferred from technical defaults.
+- Monetary Outstanding Balance and Subscription Session balance are distinct concepts and must not share one Money abstraction.
 - Canonical Business entity identity uses application-generated UUID v7 under `TECH-ADR-003`.
 - ID generation is exposed through a narrow application/technical abstraction; Domain code does not depend on Prisma or a concrete UUID library.
 - PostgreSQL uses native `uuid`; API/contracts use UUID-formatted strings.

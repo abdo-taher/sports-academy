@@ -37,6 +37,10 @@ These rules govern `apps/api` after initialization. They apply after canonical B
 - Domain/Application errors remain transport-neutral. A centralized exception filter maps them to the stable API error envelope and correlation/request ID.
 - Interceptors and pipes may own transport cross-cutting behavior or parsing; they must not hide Business policy, Business audit, persistence, or authorization decisions.
 - The only current REST version strategy is the locked `/api/v1` URI strategy.
+- `TECH-ADR-004` approves exact decimal semantics for canonical monetary values.
+- Transport DTOs carry monetary amounts as decimal strings; conversion to exact decimal values occurs before financial calculation.
+- Prisma Decimal is restricted to persistence mapping and must not become the Domain money type.
+- JavaScript `number`, implicit rounding and framework-default financial precision are prohibited for canonical monetary calculation.
 - `TECH-ADR-003` approves application-generated UUID v7 for canonical Business entity IDs.
 - Transport validation may validate UUID-formatted identifiers, but Nest pipes/decorators do not own Domain identity semantics.
 - Domain/Application code must not depend on Prisma or the concrete UUID-generation library.

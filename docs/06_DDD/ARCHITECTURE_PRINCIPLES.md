@@ -34,4 +34,4 @@ The complete lock is authoritative in:
 
 ## Unresolved Technical Choices
 
-Authentication, object-storage provider, date utility and monetary representation remain explicitly gated in `TECH_STACK_LOCK.md`. Backend testing, structured logging and entity identity are resolved by approved ADRs. `TECH-ADR-003` defines canonical Business entity identity as application-generated UUID v7; Domain code remains independent of Prisma and the concrete generator.
+Authentication, object-storage provider and date utility remain explicitly gated in `TECH_STACK_LOCK.md`. Backend testing, structured logging, entity identity and monetary representation are resolved by approved ADRs. `TECH-ADR-004` requires exact decimal monetary semantics without inventing currency, rounding or precision policy. `TECH-ADR-003` defines canonical Business entity identity as application-generated UUID v7; Domain code remains independent of Prisma and the concrete generator.

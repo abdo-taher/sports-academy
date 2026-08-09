@@ -82,7 +82,7 @@ The application workspaces are not initialized yet. When `apps/web`, `apps/api` 
 | Object-storage provider | `NOT YET LOCKED — ADR REQUIRED BEFORE PROVIDER COUPLING` | Use only a provider-neutral abstraction until selected |
 | Structured logging implementation | `LOCKED — Pino + nestjs-pino; TECH-ADR-001 APPROVED` | One structured Backend logger only; no Winston or competing production logger; no production `console.log` strategy |
 | Date utility | `NOT YET LOCKED — ADR REQUIRED BEFORE ADDING A LIBRARY` | Do not add multiple date libraries |
-| Monetary representation | `NOT YET LOCKED — ADR REQUIRED BEFORE DB INITIALIZATION` | No unsafe floating-point financial representation |
+| Monetary representation | `LOCKED — decimal.js exact arithmetic + PostgreSQL NUMERIC + decimal-string API transport; TECH-ADR-004 APPROVED` | `decimal.js` is the approved Domain/Application exact-decimal implementation; Prisma Decimal is persistence-only; no JavaScript Number, floating-point DB type, implicit rounding or invented global precision/scale for canonical monetary values |
 | Entity identifier strategy | `LOCKED — application-generated UUID v7; PostgreSQL native uuid; TECH-ADR-003 APPROVED` | One canonical Business entity ID strategy; no CUID/integer/random-string drift by domain |
 | Realtime transport | Disabled by default | WebSockets, Socket.IO or SSE require a confirmed requirement and ADR |
 

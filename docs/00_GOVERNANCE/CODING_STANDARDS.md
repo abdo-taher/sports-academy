@@ -88,8 +88,13 @@ Backend suffixes are consistent: `.entity.ts`, `.repository.ts`, `.controller.ts
 
 - Store system timestamps consistently in UTC and convert for the applicable Business/Branch display timezone.
 - Do not manipulate date strings ad hoc or add multiple date libraries.
-- Use an approved exact monetary representation; do not rely on unsafe floating-point arithmetic.
+- Canonical monetary arithmetic uses exact decimal semantics under `TECH-ADR-004`; JavaScript `number` is prohibited for canonical financial calculation.
+- Domain/Application monetary values use a dedicated Money/value abstraction; Prisma Decimal remains an infrastructure persistence type.
+- PostgreSQL monetary storage uses exact `NUMERIC`/`DECIMAL`, never `real`, `double precision` or PostgreSQL `money`.
+- API monetary amounts use canonical decimal strings rather than JSON floating-point numbers.
 - Currency is explicit where required and is not hardcoded across random files.
+- Rounding, monetary precision and scale must not be invented by framework defaults. A calculation or column requiring undefined Business/configuration policy is a specification gap.
+- Percentage/rate values may use exact decimals but are not Money values; Subscription Session balance is not monetary.
 - Canonical Business entity IDs use application-generated UUID v7 as approved by `TECH-ADR-003`.
 - PostgreSQL persists canonical entity IDs as native `uuid`; APIs represent them as UUID-formatted strings.
 - Domain code must not import Prisma or a concrete UUID-generation library.

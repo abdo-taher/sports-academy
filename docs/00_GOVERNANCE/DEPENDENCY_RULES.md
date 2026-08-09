@@ -57,6 +57,7 @@ Without an approved superseding ADR, do not add packages for:
 - Auth.js, Clerk, Firebase Auth, Supabase Auth or a custom auth framework before the authentication decision;
 - Winston or another competing Backend production logger while `TECH-ADR-001` remains active; Pino + `nestjs-pino` is the approved logging implementation.
 - Jest, `ts-jest`, `@types/jest` or another competing Backend unit/integration runner while `TECH-ADR-002` remains active; Vitest is the approved Backend runner.
+- `big.js`, `bignumber.js`, `currency.js`, Dinero or another competing canonical monetary arithmetic library while `TECH-ADR-004` remains active; `decimal.js` is the approved exact-decimal implementation.
 
 Nest's approved internal adapter and transitive packages do not authorize a competing application architecture. Direct dependencies are still reviewed in context.
 
