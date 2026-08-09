@@ -220,7 +220,9 @@ A module must not query another module's tables because Prisma makes it convenie
 - Authentication implementation is blocked until an approved technical decision exists.
 - Backend authorization is authoritative; frontend permission checks are UX only.
 - Realtime is disabled unless a confirmed requirement and ADR approve it.
+- Backend technical logging uses the approved Pino + `nestjs-pino` implementation from `TECH-ADR-001`; concrete logger configuration belongs to bootstrap/infrastructure and must not leak into Domain code.
 - Technical logs and canonical Business Audit records are separate.
+- Technical logs use correlation/request IDs and centralized sensitive-data redaction; a technical log entry never satisfies a canonical Business Audit requirement.
 - Technical environment configuration and Business operational configuration are separate.
 - Archive is a Business lifecycle concept, not a generic `deletedAt` policy.
 

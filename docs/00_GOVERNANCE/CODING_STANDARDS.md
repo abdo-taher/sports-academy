@@ -77,7 +77,8 @@ Backend suffixes are consistent: `.entity.ts`, `.repository.ts`, `.controller.ts
 
 ## Logging, Errors and Audit
 
-- Use one structured logging approach after it is technically selected.
+- Backend structured logging uses Pino with `nestjs-pino` as approved by `TECH-ADR-001`.
+- Concrete Pino configuration belongs to Backend bootstrap/infrastructure; Domain code must not import Pino or `nestjs-pino`.
 - Do not use random production `console.log` statements.
 - Include correlation/request identifiers in technical errors and important events.
 - API modules use the common error envelope defined by architecture governance.

@@ -13,6 +13,6 @@ This log indexes technical architecture decisions only. It has no authority to c
 
 | ADR ID | Date | Title | Status | Supersedes | Related Change ID | Record |
 |---|---|---|---|---|---|---|
-| — | — | No technical ADR has been approved yet. | — | — | — | — |
+| TECH-ADR-001 | 2026-08-09 | Structured Logging | APPROVED | None | CHG-TECH-ADR-001 | `TECHNICAL_ADRS/TECH-ADR-001-structured-logging.md` |
 
-The first new record is `TECH-ADR-001`. IDs are never reused.
+The next unused ADR ID is `TECH-ADR-002`. IDs are never reused. `TECH-ADR-001` is approved. Proposed future ADRs have no implementation authority until explicitly approved.

@@ -70,7 +70,10 @@ These rules govern `apps/api` after initialization. They apply after canonical B
 - Lazy module loading requires measured startup/cold-start need and architecture review; it is not a default modular-monolith pattern.
 - A single deployable API may expose deployment-appropriate liveness/readiness checks after dependency and information-disclosure review. This does not authorize Nest microservices, Terminus, or Kubernetes dependencies automatically.
 - Enable graceful shutdown and close HTTP, Prisma, Redis, BullMQ, and other owned resources within deployment timeouts.
-- Structured logs and correlation IDs are required, but the logging implementation remains blocked until the required ADR; Pino/Winston examples are not selections.
+- Structured logging is approved through `TECH-ADR-001`: use Pino with `nestjs-pino` for Backend technical logging.
+- Concrete logger configuration belongs to bootstrap/infrastructure; Domain code must not import Pino or `nestjs-pino`.
+- Correlation/request IDs and centralized sensitive-data redaction are required. Technical logs remain separate from canonical Business Audit records.
+- Winston or another competing production logger requires a superseding approved technical ADR.
 
 ## Upstream provenance
 

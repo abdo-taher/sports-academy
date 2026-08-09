@@ -72,13 +72,16 @@ const config: ValidationConfig = {
     "Redis",
     "BullMQ",
     "REST",
-    "OpenAPI"
+    "OpenAPI",
+    "Pino",
+    "nestjs-pino"
   ],
   prohibitedDependencies: [
     "@reduxjs/*", "redux", "mobx", "zustand", "swr", "formik", "yup",
     "@mui/*", "antd", "@chakra-ui/*", "bootstrap", "styled-components", "@emotion/*",
     "typeorm", "sequelize", "drizzle-orm", "mikro-orm", "@mikro-orm/*", "mongoose",
-    "@nestjs/graphql", "graphql", "apollo*", "kafkajs", "amqplib", "bull", "cypress"
+    "@nestjs/graphql", "graphql", "apollo*", "kafkajs", "amqplib", "bull", "cypress",
+    "winston"
   ],
   allowedExceptions: [],
   documentationIndexLocations: [

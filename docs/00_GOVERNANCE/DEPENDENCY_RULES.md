@@ -54,7 +54,8 @@ Without an approved superseding ADR, do not add packages for:
 - GraphQL or tRPC;
 - RabbitMQ, Kafka, Bull or another queue implementation;
 - Cypress;
-- Auth.js, Clerk, Firebase Auth, Supabase Auth or a custom auth framework before the authentication decision.
+- Auth.js, Clerk, Firebase Auth, Supabase Auth or a custom auth framework before the authentication decision;
+- Winston or another competing Backend production logger while `TECH-ADR-001` remains active; Pino + `nestjs-pino` is the approved logging implementation.
 
 Nest's approved internal adapter and transitive packages do not authorize a competing application architecture. Direct dependencies are still reviewed in context.
 
