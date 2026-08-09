@@ -10,6 +10,7 @@ import { validateBusinessGate } from "../src/validators/business-gate.ts";
 import { validateBusiness } from "../src/validators/business.ts";
 import { validateDependencies } from "../src/validators/dependencies.ts";
 import { validateDocumentation } from "../src/validators/documentation.ts";
+import { validateGovernance } from "../src/validators/governance.ts";
 import { validateNestjsArchitecture } from "../src/validators/nestjs.ts";
 import { validateChangePropagation } from "../src/validators/propagation.ts";
 import { validateRepositoryStructure } from "../src/validators/structure.ts";
@@ -85,6 +86,38 @@ useFixture("valid fixture passes deterministic baseline validators", async (root
   }
 });
 
+useFixture("governance requires NestJS provenance and API agent routing", async (root) => {
+  const requiredGovernanceFiles = [
+    "docs/00_GOVERNANCE/NESTJS_ENGINEERING_RULES.md",
+    "docs/00_GOVERNANCE/NESTJS_UPSTREAM_SOURCE.md",
+    "docs/00_GOVERNANCE/NESTJS_RULE_ADOPTION_MATRIX.md"
+  ];
+  const governanceContext = {
+    ...context(root),
+    config: { ...config, requiredGovernanceFiles }
+  };
+  const rootRouting = "TECH_STACK_LOCK.md ARCHITECTURE_RULES.md DEPENDENCY_RULES.md VALIDATION_GOVERNANCE.md validate_changed_scope pnpm validate:changed";
+
+  write(root, "AGENTS.md", rootRouting);
+  write(root, "apps/api/AGENTS.md", "TECH_STACK_LOCK.md ARCHITECTURE_RULES.md NESTJS_ENGINEERING_RULES.md");
+  write(root, "apps/web/AGENTS.md", "TECH_STACK_LOCK.md ARCHITECTURE_RULES.md");
+  for (const adapter of [".codex/README.md", "CLAUDE.md", ".cursor/rules/project-governance.mdc", ".github/copilot-instructions.md"]) write(root, adapter);
+  write(root, requiredGovernanceFiles[0] ?? "", "# Local rules\n");
+  write(root, requiredGovernanceFiles[1] ?? "", "# Pinned source\n");
+
+  const missingMatrix = await validateGovernance(governanceContext);
+  assert.equal(missingMatrix.status, "FAIL");
+  assert.ok(missingMatrix.findings.some((item) => item.code === "GOV-REQUIRED-MISSING" && item.file === requiredGovernanceFiles[2]));
+
+  write(root, requiredGovernanceFiles[2] ?? "", "# Adoption matrix\n");
+  assert.equal((await validateGovernance(governanceContext)).status, "PASS");
+
+  write(root, "apps/api/AGENTS.md", "TECH_STACK_LOCK.md ARCHITECTURE_RULES.md");
+  const missingRoute = await validateGovernance(governanceContext);
+  assert.equal(missingRoute.status, "FAIL");
+  assert.ok(missingRoute.findings.some((item) => item.code === "GOV-APP-ROUTING" && /NESTJS_ENGINEERING_RULES/.test(item.message)));
+});
+
 useFixture("broken Markdown link fails", async (root) => {
   write(root, "docs/README.md", "[missing](./NOPE.md)\n");
   const report = await validateDocumentation(context(root));
@@ -141,6 +174,17 @@ useFixture("Business Gate blocks on Business failure", async (root) => {
   const report = await validateBusinessGate(context(root));
   assert.equal(report.status, "FAIL");
   assert.equal(report.summary, "BUSINESS GATE: FAIL");
+});
+
+useFixture("Business Gate exposes the canonical Business baseline", async (root) => {
+  const report = await validateBusinessGate(context(root));
+  assert.equal(report.status, "PASS");
+  assert.deepEqual(report.metrics, {
+    blockingFindings: 0,
+    rules: 1,
+    approvedDecisions: 1,
+    openDecisions: 0
+  });
 });
 
 const reviewed = (overrides: Record<string, unknown> = {}): Record<string, unknown> => ({

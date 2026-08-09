@@ -32,7 +32,9 @@
     "validate:all": "pnpm --filter @sports-academy/project-validator cli all",
     "mcp:validator": "pnpm --filter @sports-academy/validation-mcp start",
     "mcp:inspect": "mcp-inspector pnpm mcp:validator",
-    "mcp:inspect:list": "mcp-inspector --cli node --import tsx src/server.ts -- --method tools/list --cwd tools/validation-mcp --format json"
+    "mcp:inspect:list": "mcp-inspector --cli bash stdio-bridge.sh -- --method tools/list --cwd tools/validation-mcp --format json",
+    "mcp:inspect:business-gate": "mcp-inspector --cli bash stdio-bridge.sh -- --method tools/call --tool-name validate_business_gate --tool-args-json '{}' --cwd tools/validation-mcp --format json",
+    "mcp:inspect:invalid-input": "mcp-inspector --cli bash stdio-bridge.sh -- --method tools/call --tool-name validate_business_gate --tool-args-json '{\"gitMode\":\"shell\"}' --cwd tools/validation-mcp --format json"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "2.1.0",

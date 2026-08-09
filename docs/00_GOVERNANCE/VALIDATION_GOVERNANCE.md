@@ -40,7 +40,7 @@ Meaningful changes use ignored working file `.change/current-change.json`. Every
 - Everyday: `pnpm validate` or `pnpm validate:changed`.
 - Business: `pnpm validate:business` and `pnpm validate:business-gate`.
 - Major/pre-release: `pnpm validate:all`.
-- MCP: use the equivalent named `validate_*` tool; handlers accept only typed options and expose no shell command input.
+- MCP: use the equivalent named `validate_*` tool; handlers accept only typed options and expose no shell command input. Inspector closure uses the fixed `tools/validation-mcp/stdio-bridge.sh` launch adapter and verifies discovery, a real Business Gate call, and controlled invalid input over actual STDIO.
 - CI: frozen install, typecheck, lint, full validation, and phase-appropriate tests on pull requests and protected pushes.
 
 ## Adding or changing a validator

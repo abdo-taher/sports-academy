@@ -18,9 +18,15 @@ export const validateGovernance = async (context: ValidationContext): Promise<Va
     if (!rootAgents.includes(expected)) findings.push(finding({ severity: "BLOCKING", code: "GOV-AGENT-ROUTING", message: `Root AGENTS.md does not route to ${expected}.`, file: "AGENTS.md" }));
   }
 
-  for (const app of ["apps/api/AGENTS.md", "apps/web/AGENTS.md"]) {
+  const appRequirements: Record<string, string[]> = {
+    "apps/api/AGENTS.md": ["TECH_STACK_LOCK.md", "ARCHITECTURE_RULES.md", "NESTJS_ENGINEERING_RULES.md"],
+    "apps/web/AGENTS.md": ["TECH_STACK_LOCK.md", "ARCHITECTURE_RULES.md"]
+  };
+  for (const [app, requirements] of Object.entries(appRequirements)) {
     const source = existsSync(join(root, app)) ? readText(join(root, app)) : "";
-    if (!source.includes("TECH_STACK_LOCK.md") || !source.includes("ARCHITECTURE_RULES.md")) findings.push(finding({ severity: "BLOCKING", code: "GOV-APP-ROUTING", message: `${app} must reference canonical technical governance.`, file: app }));
+    for (const required of requirements) {
+      if (!source.includes(required)) findings.push(finding({ severity: "BLOCKING", code: "GOV-APP-ROUTING", message: `${app} must reference ${required}.`, file: app }));
+    }
   }
 
   const adapters = [".codex/README.md", "CLAUDE.md", ".cursor/rules/project-governance.mdc", ".github/copilot-instructions.md"];

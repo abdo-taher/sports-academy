@@ -10,9 +10,13 @@ From `<PROJECT_ROOT>`:
 pnpm mcp:validator
 pnpm mcp:inspect
 pnpm mcp:inspect:list
+pnpm mcp:inspect:business-gate
+pnpm mcp:inspect:invalid-input
 ```
 
-STDIO protocol messages use stdout; diagnostics use stderr. Inspector v2 separates target arguments from Inspector options with `--`; `pnpm mcp:inspect:list` contains the current supported non-interactive form. The Inspector can exercise tool listing, schemas, valid tool calls, and controlled invalid-input responses without any AI client.
+STDIO protocol messages use stdout; diagnostics use stderr. Inspector v2 separates target arguments from Inspector options with `--`. The verified CLI commands launch the server through the fixed, argument-free `stdio-bridge.sh` adapter because Inspector 2.1.0 can close a directly spawned Node child pipe before initialization in managed terminals. The adapter's native relays preserve the protocol bytes and expose no command input.
+
+`pnpm mcp:inspect:list` must return exactly 15 tools. `pnpm mcp:inspect:business-gate` runs the real Validator Core against this repository. `pnpm mcp:inspect:invalid-input` is expected to exit nonzero with a controlled `isError: true` response; it verifies rejection rather than successful validation.
 
 ## Client configuration
 

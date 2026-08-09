@@ -25,6 +25,8 @@ This folder tells humans and AI **what to trust, where to look, and what not to 
 - `CODING_STANDARDS.md` — implementation, naming, boundary and cross-cutting standards.
 - `TESTING_STRATEGY.md` — canonical test tools, placement and coverage gates.
 - `NESTJS_ENGINEERING_RULES.md` — deterministic Backend module/layer boundaries and conventions.
+- `NESTJS_UPSTREAM_SOURCE.md` — pinned advisory NestJS skill provenance, version and license declaration evidence.
+- `NESTJS_RULE_ADOPTION_MATRIX.md` — complete project classification and adaptation of all pinned upstream rules.
 - `VALIDATION_GOVERNANCE.md` — shared Core/CLI/MCP/CI enforcement, result contract and Business Gate.
 - `TECH_DECISION_PROTOCOL.md` — required ADR route for changes to the technical lock.
 
