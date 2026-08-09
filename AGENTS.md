@@ -11,12 +11,15 @@ Before any task:
 
 Before any implementation or technical-structure change, also read in order:
 
-1. `docs/00_GOVERNANCE/TECH_STACK_LOCK.md`;
-2. `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`;
-3. `docs/00_GOVERNANCE/DEPENDENCY_RULES.md`;
-4. `docs/00_GOVERNANCE/CODING_STANDARDS.md`;
-5. `docs/00_GOVERNANCE/TESTING_STRATEGY.md`;
-6. the relevant application `AGENTS.md`.
+1. `docs/00_GOVERNANCE/MASTER_IMPLEMENTATION_ROADMAP.md` for the governed implementation phase and sequencing;
+2. `docs/00_GOVERNANCE/TECH_STACK_LOCK.md`;
+3. `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`;
+4. `docs/00_GOVERNANCE/DEPENDENCY_RULES.md`;
+5. `docs/00_GOVERNANCE/CODING_STANDARDS.md`;
+6. `docs/00_GOVERNANCE/TESTING_STRATEGY.md`;
+7. the relevant application `AGENTS.md`.
+
+The roadmap controls sequencing only. Approved Business Decisions, canonical Business Rules and approved technical ADRs remain higher authority.
 
 ## Core Rules
 

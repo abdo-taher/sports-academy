@@ -28,7 +28,10 @@ Before any modification:
 
 Before implementation or a technical-structure change:
 
-5. Read [`TECH_STACK_LOCK.md`](./docs/00_GOVERNANCE/TECH_STACK_LOCK.md), [`ARCHITECTURE_RULES.md`](./docs/00_GOVERNANCE/ARCHITECTURE_RULES.md) and [`DEPENDENCY_RULES.md`](./docs/00_GOVERNANCE/DEPENDENCY_RULES.md).
+5. Read [`MASTER_IMPLEMENTATION_ROADMAP.md`](./docs/00_GOVERNANCE/MASTER_IMPLEMENTATION_ROADMAP.md) for the governed phase sequence, entry/exit gates and delivery order.
+6. Read [`TECH_STACK_LOCK.md`](./docs/00_GOVERNANCE/TECH_STACK_LOCK.md), [`ARCHITECTURE_RULES.md`](./docs/00_GOVERNANCE/ARCHITECTURE_RULES.md) and [`DEPENDENCY_RULES.md`](./docs/00_GOVERNANCE/DEPENDENCY_RULES.md).
+
+The roadmap controls **implementation sequencing only**. It never overrides approved Business Decisions, canonical Business Rules, Business lifecycles/policies, or an approved technical ADR.
 
 ## AI Tool Adapters
 
@@ -43,7 +46,7 @@ All adapters point to the same authoritative change protocol.
 
 ## Locked Technical Baseline
 
-The repository is a pnpm/Turborepo TypeScript monorepo. The web application is locked to Next.js App Router/React/Tailwind/shadcn with TanStack Query, React Hook Form and Zod. The API is locked to a NestJS Modular Monolith with PostgreSQL, Prisma, Redis/BullMQ and REST/OpenAPI. Tests use Vitest/React Testing Library on the Frontend and Playwright for E2E; the single Backend runner is selected at API initialization.
+The repository is a pnpm/Turborepo TypeScript monorepo. The web application is locked to Next.js App Router/React/Tailwind/shadcn with TanStack Query, React Hook Form and Zod. The API is locked to a NestJS Modular Monolith with PostgreSQL, Prisma, Redis/BullMQ and REST/OpenAPI. Tests use Vitest/React Testing Library on the Frontend, Vitest on the Backend, and Playwright for browser E2E.
 
 Run `pnpm validate:changed` for everyday deterministic validation and `pnpm validate:all` for major/mixed work or release validation. The same validator core is available to AI clients through the local read-only [`sports-academy-validator` MCP server](./tools/validation-mcp/README.md) and is enforced directly by CI. Any stack replacement requires the [`Technical Decision Protocol`](./docs/00_GOVERNANCE/TECH_DECISION_PROTOCOL.md).
 
@@ -69,6 +72,7 @@ A technical or visual-only change remains in its own layer unless it genuinely c
 
 | Area | Location |
 |---|---|
+| Implementation Roadmap | `docs/00_GOVERNANCE/MASTER_IMPLEMENTATION_ROADMAP.md` |
 | Business Canonical | `docs/01_BUSINESS_FOUNDATION/`, `docs/02_DOMAINS/`, `docs/03_END_TO_END_JOURNEYS/`, `docs/04_POLICIES/` |
 | Requirements | `docs/05_REQUIREMENTS/` |
 | Technical Documentation | `docs/06_DDD/` through `docs/13_ANALYTICS/` |

@@ -13,7 +13,7 @@ If you are modifying documentation or code, first read:
 
 Then continue with the role and domain sources relevant to the task.
 
-For code, technical structure or dependencies, also read `TECH_STACK_LOCK.md`, `ARCHITECTURE_RULES.md`, `DEPENDENCY_RULES.md`, `CODING_STANDARDS.md` and `TESTING_STRATEGY.md`. A conflict must stop with `TECH STACK CONFLICT — ADR REQUIRED`; follow `TECH_DECISION_PROTOCOL.md` rather than improvising.
+For code, technical structure or implementation sequencing, also read `MASTER_IMPLEMENTATION_ROADMAP.md`, then `TECH_STACK_LOCK.md`, `ARCHITECTURE_RULES.md`, `DEPENDENCY_RULES.md`, `CODING_STANDARDS.md` and `TESTING_STRATEGY.md`. The roadmap controls phase sequencing and gates only; it never overrides approved Business Decisions, canonical Rules or approved technical ADRs. A conflict must stop with `TECH STACK CONFLICT — ADR REQUIRED`; follow `TECH_DECISION_PROTOCOL.md` rather than improvising.
 
 Before completing a modification, follow `VALIDATION_GOVERNANCE.md` and run the shared validator through MCP `validate_changed_scope` or CLI `pnpm validate:changed`. Business-affecting work must pass the Business Gate before downstream implementation.
 

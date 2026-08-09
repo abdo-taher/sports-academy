@@ -6,12 +6,15 @@ Use the smallest relevant source set. For changes, first read `docs/00_GOVERNANC
 
 Read in order:
 
-1. `docs/00_GOVERNANCE/TECH_STACK_LOCK.md`
-2. `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`
-3. `docs/00_GOVERNANCE/DEPENDENCY_RULES.md`
-4. `docs/00_GOVERNANCE/CODING_STANDARDS.md`
-5. `docs/00_GOVERNANCE/TESTING_STRATEGY.md`
-6. the relevant `apps/*/AGENTS.md`
+1. `docs/00_GOVERNANCE/MASTER_IMPLEMENTATION_ROADMAP.md` — implementation phase order, gates and sequencing only
+2. `docs/00_GOVERNANCE/TECH_STACK_LOCK.md`
+3. `docs/00_GOVERNANCE/ARCHITECTURE_RULES.md`
+4. `docs/00_GOVERNANCE/DEPENDENCY_RULES.md`
+5. `docs/00_GOVERNANCE/CODING_STANDARDS.md`
+6. `docs/00_GOVERNANCE/TESTING_STRATEGY.md`
+7. the relevant `apps/*/AGENTS.md`
+
+The roadmap does not create Business behavior and does not supersede approved Business Decisions, canonical Business Rules or approved technical ADRs.
 
 Changes to a locked technology or fixed architecture require `docs/00_GOVERNANCE/TECH_DECISION_PROTOCOL.md`. A conflict stops implementation with `TECH STACK CONFLICT — ADR REQUIRED`.
 
