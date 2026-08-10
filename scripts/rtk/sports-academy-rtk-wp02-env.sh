@@ -96,7 +96,10 @@ sports_academy_rtk_file_mode() {
 }
 
 sports_academy_rtk_context_match() {
-  local name="$1" expected="$2" inherited="${!name-}"
+  local name="$1" expected="$2" inherited=""
+  if declare -p "$name" >/dev/null 2>&1; then
+    inherited="${!name}"
+  fi
   if [[ -n "$inherited" && "$inherited" != "$expected" ]]; then
     sports_academy_rtk_fail "inconsistent inherited host context: $name"
   fi
