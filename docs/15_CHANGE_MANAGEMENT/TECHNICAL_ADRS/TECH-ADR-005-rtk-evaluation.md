@@ -1,19 +1,21 @@
 # TECH-ADR-005 — RTK Evaluation and Safe Adoption Gate
 
-- Status: PROPOSED
+- Status: APPROVED
 - Date: 2026-08-10
 - Decision owner: Project Technical Owner
-- Technical approver: PENDING — explicit approval required
+- Technical approver: Project Technical Owner — explicit limited approval for WP-RTK-02 preparation and disposable observation on 2026-08-10
 - Supersedes / superseded by: None
 - Related Change ID: CHG-TECH-RTK-001
-- Roadmap scope: Phase 1.5 / WP-RTK-01
+- Roadmap scope: Phase 1.5 / WP-RTK-01 research and WP-RTK-02 controlled evaluation only
 - Business impact: N/A — NO BUSINESS IMPACT
 
 ## Context
 
 This is an **evaluation and version-freeze decision record**. It completes
-WP-RTK-01 research only; it does not approve or claim RTK installation,
-initialization, agent integration, telemetry, canonical adoption, or routine use.
+WP-RTK-01 research and now authorizes only preparation and execution of the
+controlled disposable WP-RTK-02 observation defined below. It does not approve
+canonical RTK installation, ACTIVE-repository initialization, normal-user-home
+installation, production use, Phase 1.5 closure, or WP-RTK-03 and later work.
 Native shell commands and repository-owned validators remain authoritative.
 
 ## Evidence classifications
@@ -66,8 +68,12 @@ shell semantics.
    persistence; isolation alone is not canonical approval.
 5. Native commands remain available; final governance, Git, migration, security,
    privacy, and release evidence remains raw.
-6. No RTK installation or initialization may target the ACTIVE repository or
-   normal user home before disposable observation and explicit approval.
+6. RTK installation and initialization may target only the approved disposable,
+   project-and-instance-qualified sandbox; the ACTIVE repository, real host home,
+   host configuration roots, system PATH, and shell profiles remain prohibited.
+7. Preparation uses native Bash on allowlisted Linux/macOS targets only. WSL,
+   Git Bash/MSYS/Cygwin, and native Windows PowerShell are unsupported for this
+   work package; no separate PowerShell implementation is authorized.
 
 ## Options considered
 
@@ -75,19 +81,20 @@ shell semantics.
 |---|---|
 | A — retain native tooling only | Current approved and safest state. |
 | B — adopt v0.45.0 immediately | Rejected due to governance/privacy blockers. |
-| C — freeze v0.45.0 for disposable evaluation only | **PROPOSED selected option.** |
+| C — freeze v0.45.0 for disposable evaluation only | **APPROVED selected option, limited to WP-RTK-02.** |
 | D — wait for a later signed release | Remains available; requires a new exact-version review. |
 
 ## Selected option
 
-**PROPOSED: Option C — freeze v0.45.0 for disposable evaluation only.**
+**APPROVED WITH LIMITED AUTHORITY: Option C — freeze v0.45.0 for disposable
+evaluation through WP-RTK-02 only.**
 
-WP-RTK-01 creates no migration and affects no Product app/package. WP-RTK-02 may
-start only after explicit Project Technical Owner approval. If approved, the
-least-destructive method is direct invocation of the checksum-pinned binary in a
-disposable sandbox with isolated `HOME`, XDG roots, agent roots, and
-`RTK_DB_PATH`; no `rtk init`, hook, or instruction mutation is allowed in the
-ACTIVE repository.
+WP-RTK-01 creates no migration and affects no Product app/package. The Project
+Technical Owner explicitly authorizes preparation and later controlled execution
+of WP-RTK-02 in the project-prefixed disposable sandbox. The least-destructive
+method is direct invocation of the checksum-pinned binary in a disposable
+sandbox with isolated `HOME`, XDG roots, agent roots, and `RTK_DB_PATH`; no
+`rtk init`, hook, or instruction mutation is allowed in the ACTIVE repository.
 
 ## Why
 
@@ -120,11 +127,31 @@ None. Product apps, packages, validators, and runtime infrastructure are unchang
 | Script shell/tools | VERIFIED CURRENT SOURCE BEHAVIOR | POSIX `sh`; `uname`, `curl`, `grep`, `sed`, `tr`, `mktemp`, `awk`, `tar`, `mkdir`, `mv`, `chmod`, `rm`, and `sha256sum` or `shasum`. Network/TLS access to GitHub release metadata/assets/checksums is required. |
 | Script destination | VERIFIED CURRENT SOURCE BEHAVIOR | Defaults to `~/.local/bin/rtk`; `RTK_INSTALL_DIR` overrides it. |
 | Version pin | VERIFIED CURRENT SOURCE BEHAVIOR | `RTK_VERSION=v0.45.0`; an unpinned moving script is prohibited here. |
-| Verification | VERIFIED CURRENT SOURCE BEHAVIOR | Script downloads checksums, verifies SHA-256 unless unsafe `RTK_SKIP_CHECKSUM=1`, moves/chmods the binary, executes `rtk --version`, then checks `PATH`. |
-| Observation installation | UNRESOLVED | Actual install effects are intentionally deferred to authorized disposable WP-RTK-02. |
+| Verification | VERIFIED CURRENT SOURCE BEHAVIOR | Script downloads checksums, verifies SHA-256 unless unsafe `RTK_SKIP_CHECKSUM=1`, moves/chmods the binary, executes `rtk --version`, then checks `PATH`. The project-owned preparation does not use that installer or execute `rtk --version`. |
+| Observation installation | UNRESOLVED | Actual install effects are intentionally deferred to authorized disposable WP-RTK-02 execution. |
 
-WP-RTK-02, if approved, must use the already checksum-verified release artifact,
-not the moving installer or unpinned Cargo/Git. No artifact may enter the repo.
+### Frozen artifact allowlist for WP-RTK-02
+
+Every supported entry below was established from the official GitHub RTK
+[`v0.45.0` release assets and published checksums](https://github.com/rtk-ai/rtk/releases/tag/v0.45.0).
+Names and hashes are explicit allowlist data; scripts do not generate filenames
+or infer support. The downloaded archive is reverified before extraction.
+
+| Normalized OS | Normalized architecture | Exact v0.45.0 asset | Exact SHA-256 | WP-RTK-02 execution model |
+|---|---|---|---|---|
+| `linux` | `x86_64` | `rtk-x86_64-unknown-linux-musl.tar.gz` | `c4c036fbf181fc55ef329786c8c17e0d427972b053b825944d968a6aafef1ba4` | Supported — native Bash |
+| `linux` | `aarch64` | `rtk-aarch64-unknown-linux-gnu.tar.gz` | `80a746dd305ef944ff50ef011ae4ce3878dd5ba88dfe35d859d05498191637c3` | Supported — native Bash |
+| `macos` | `x86_64` | `rtk-x86_64-apple-darwin.tar.gz` | `9ea02f889d5a2779e4fb700df4587824303c5a57cda22e903e30058079fca0ef` | Supported — native Bash |
+| `macos` | `aarch64` | `rtk-aarch64-apple-darwin.tar.gz` | `064151cfc2d50b24d810b06a0af2e41b9c945e83534e4c438c3d3eae607fc3f4` | Supported — native Bash |
+
+The same official release publishes Windows x86_64 asset
+`rtk-x86_64-pc-windows-msvc.zip` with SHA-256
+`34cea9009a8099acdaf85147b971d95f65efabfa63fb3aea7d3e2b73e6f517c3`,
+but that binary does not make this repository-managed Bash workflow safe on
+Windows. WSL is classified separately and unsupported because it is not native
+Linux for this observation; Git Bash/MSYS/Cygwin and native PowerShell are also
+unsupported. All other OS/architecture combinations fail closed. No artifact may
+enter the repository.
 
 ## Supported integrations and Kiro implication
 
@@ -312,24 +339,41 @@ These criteria describe gates only and grant no authority:
 | Error/fallback behavior | Source expectations and unresolved stderr/semantic test gate recorded | PASS |
 | Exact artifact before installation | Artifact/checksum/revision frozen; no installation performed | PASS |
 | Rollback/uninstall understood for research entry | Safe whole-sandbox recovery and unsafe/incomplete agent uninstall limits recorded | PASS |
-| Deliverable: RTK Integration Decision Record | This proposed ADR, explicitly evaluation-only | PASS |
-| Product tests/typecheck/lint/build | No Product/code/dependency change; documentation-only research | N/A — NO PRODUCT IMPLEMENTATION |
+| Deliverable: RTK Integration Decision Record | This approved ADR, limited to controlled WP-RTK-02 evaluation and explicitly not canonical adoption | PASS |
+| Product tests/typecheck/lint/build | No Product/code/dependency change; repository tooling preparation only | N/A — NO PRODUCT IMPLEMENTATION |
 | Phase 1.5 runtime exit criteria | Generated-file observation, privacy runtime verification, semantic comparison, and failures belong to WP-RTK-02–07 | N/A — NOT WP-RTK-01 CLOSURE |
 
 The unresolved runtime findings do not block closure of **research/version-freeze
 WP-RTK-01**, because they are identified as adoption blockers and have explicit
-later test gates. They do block canonical adoption. WP-RTK-01 remains open until
-its documentation validation and staged review pass.
+later test gates. They do block canonical adoption. WP-RTK-01 closed through
+validated commit `e3e169d8d97b977a7584927e6905721af383b64c`; this approval opens
+only WP-RTK-02 preparation and disposable observation.
 
 ## Documentation impact
 
-Only this proposed ADR, its technical register entry, and cumulative Change Log
-row change. No stack lock or other technical authority changes.
+This approved, evaluation-only ADR, its technical register entry, cumulative
+Change Log row, and nine repository-owned `scripts/rtk/` preparation files are
+updated. No stack lock, Product specification, or canonical adoption authority
+changes.
 
 ## Security and operational impact
 
-No dependency, Product code, runtime, hook, agent file, normal user home, or
-ACTIVE-repository integration changes. Business impact is
+The scripts dynamically resolve the Git root and immutable real host context,
+validate a sanitized instance suffix, and isolate every mutable root beneath
+`${REAL_HOME}/Kiro_Sandboxes/sports-academy-${INSTANCE}-rtk-wp02` by default.
+Safe absolute sandbox override is allowed only when its resolved path preserves
+the exact instance-qualified basename, remains outside the ACTIVE repository and
+real host configuration roots, is not nested under another WP-RTK-02 namespace,
+and contains no symlink escape. Child scripts inherit and verify the resolved
+host and sandbox context after `HOME`/XDG isolation.
+
+Preflight is non-mutating. Bootstrap may create only disposable sandbox state,
+clone the approved branch, download/reverify/extract the explicit frozen asset,
+write disabled privacy configuration, and capture PRE evidence. It never runs
+RTK, installs host prerequisites, changes permanent `PATH`, or edits profiles.
+Only the separately controlled run script encodes `rtk init --codex`; even
+`rtk --version` remains dormant. No dependency, Product code/runtime, hook,
+normal host home, or ACTIVE-repository integration changes. Business impact is
 `N/A — NO BUSINESS IMPACT`; baseline remains `114 / 40 / 0`.
 
 ## Recommendation
@@ -341,10 +385,19 @@ layering and enforceable local tracking control.
 
 ## Approval
 
-**PENDING — NOT APPROVED.** An AI cannot approve this ADR. Until explicit Project
-Technical Owner approval, WP-RTK-02 through WP-RTK-07 must not execute, no RTK
-binary may be installed, no `rtk init` command may run, and no repository/user
-agent instruction may change.
+**APPROVED WITH LIMITED AUTHORITY — WP-RTK-02 ONLY.**
+
+On 2026-08-10, the Project Technical Owner explicitly approved Option C only:
+preparation and controlled execution of WP-RTK-02 against RTK v0.45.0 at
+`b34be37caf3796b69a50952a28e60e32b5daad43` in the project-and-instance-specific
+`sports-academy-${INSTANCE}-rtk-wp02` disposable namespace (default instance:
+`sports-academy-default-rtk-wp02`).
+
+This approval does not authorize canonical adoption, ACTIVE-repository or normal
+user-home installation, system-wide/PATH installation, production use, Phase 1.5
+closure, or WP-RTK-03 and later work. Telemetry remains disabled. Preparation
+scripts must be reviewed and validated before `rtk init --codex` may execute.
+WP-RTK-02 runtime evidence must be reviewed before any further authority exists.
 
 ## Primary sources
 
